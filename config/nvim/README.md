@@ -26,13 +26,6 @@ Use below command to get a list of all available languages and their installatio
 ```
 
 
-## Reference:
-
-1. https://github.com/nvim-treesitter/nvim-treesitter
-2. https://github.com/nvim-treesitter/nvim-tree-docs
-3. https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-4. https://www.josean.com/posts/nvim-treesitter-and-textobjects
-
 
 # Cookbook
 
@@ -68,4 +61,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 And there we have it, modern format on save for those who want it.
 
 Reference: https://www.mitchellhanberg.com/modern-format-on-save-in-neovim/
+
+## Reference:
+
+1. https://github.com/nvim-treesitter/nvim-treesitter
+2. https://github.com/nvim-treesitter/nvim-tree-docs
+3. https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+4. https://www.josean.com/posts/nvim-treesitter-and-textobjects
 

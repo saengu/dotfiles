@@ -28,6 +28,7 @@ now(function()
 
   lspconfig.gopls.setup({})
   lspconfig.zls.setup({})
+  lspconfig.clojure_lsp.setup({})
 
   -- Note: Rust use rustaceanvim plugin instead.
   --lspconfig.rust_analyzer.setup({})
