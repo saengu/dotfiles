@@ -22,20 +22,9 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 --          └─────────────────────────────────────────────────────────┘
 
 now(function()
-  add('neovim/nvim-lspconfig')
-
-  local lspconfig = require('lspconfig')
-
-  lspconfig.gopls.setup({})
-  lspconfig.zls.setup({})
-  lspconfig.clojure_lsp.setup({})
-  lspconfig.clangd.setup({})
-
-  -- Note: Rust use rustaceanvim plugin instead.
-  --lspconfig.rust_analyzer.setup({})
+  vim.lsp.enable({ 'c', 'go', 'zig' })
 
   -- Took from LspAttach official help document
-
   vim.api.nvim_create_autocmd("LspAttach", {
 
       callback = function(args)
