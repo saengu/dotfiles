@@ -29,6 +29,7 @@ now(function()
   lspconfig.gopls.setup({})
   lspconfig.zls.setup({})
   lspconfig.clojure_lsp.setup({})
+  lspconfig.clangd.setup({})
 
   -- Note: Rust use rustaceanvim plugin instead.
   --lspconfig.rust_analyzer.setup({})
@@ -159,7 +160,7 @@ end)
 now(function()
   add({
     source = "nvim-telescope/telescope.nvim",
-    checkout = '0.1.8',
+    checkout = 'v0.2.0',
     depends = { "nvim-lua/plenary.nvim" },
   })
 

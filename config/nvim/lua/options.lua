@@ -37,6 +37,8 @@ vim.o.splitbelow    = true      -- Horizontal splits will be below
 vim.o.splitright    = true      -- Vertical splits will be to the right
 vim.o.wrap          = false     -- Display long lines as just one line
 
+vim.o.winborder     = "solid"
+
 vim.o.fillchars = table.concat(
   -- Special UI symbols
   { 'eob: ', 'fold:╌', 'horiz:═', 'horizdown:╦', 'horizup:╩', 'vert:║', 'verthoriz:╬', 'vertleft:╣', 'vertright:╠' },
