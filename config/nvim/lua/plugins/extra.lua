@@ -22,7 +22,9 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 --          └─────────────────────────────────────────────────────────┘
 
 now(function()
-  vim.lsp.enable({ 'c', 'go', 'zig' })
+  add('neovim/nvim-lspconfig')
+
+  vim.lsp.enable({ 'clangd', 'gopls', 'zls' })
 
   -- Took from LspAttach official help document
   vim.api.nvim_create_autocmd("LspAttach", {

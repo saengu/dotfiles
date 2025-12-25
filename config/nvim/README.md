@@ -4,25 +4,15 @@ These are lua config files for neovim >= 0.11 based on mini.nvim packages.
 
 # Add Language Server
 
-According to official document (https://neovim.io/doc/user/lsp.html), following below steps
-
-1. Add config file to folder: stdpath('config') .. '/lsp/<language_server_name>.lua'
-
-```
-return {
-    cmd = { "rust-analyzer" },
-}
-```
-
-2. Enable language server in lua/plugins/extra.lua
+Use `nvim-lspconfig` plugin to provide language server configurations and built-in `vim.lsp.enable`
+function to activate language server. Refer to `nvim-lspconfig` home page for more information.
 
 ```
 vim.lsp.enable('<language_server_name>')
 
 # Or multiple language servers
 
-
-vim.lsp.enable({'<language_server_name1>', '<language_server_name2>'})
+vim.lsp.enable({'<language_server_name1>', '<language_server_name2>', ... })
 ```
 
 
