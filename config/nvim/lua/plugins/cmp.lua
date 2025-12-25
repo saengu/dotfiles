@@ -7,14 +7,24 @@ later(function()
   add('hrsh7th/cmp-path')
   add('hrsh7th/cmp-cmdline')
 
-  -- Use NeoVim native snippet engine
+  -- Setup snippet engine with LuaSnip
+  add('L3MON4D3/LuaSnip')
+  add('saadparwaiz1/cmp_luasnip')
+  add('rafamadriz/friendly-snippets')
+
+  local luasnip = require("luasnip")
+  require("luasnip.loaders.from_vscode").lazy_load()
+
   local cmp = require('cmp')
   cmp.setup({
     preselect = cmp.PreselectMode.Item,
     completion = { completeopt = 'menu,menuone,noinsert,fuzzy,preview' },
     snippet = {
       expand = function(args)
-        vim.snippet.expand(args.body)
+        require('luasnip').lsp_expand(args.body)
+
+        -- Use NeoVim native snippet engine
+        -- vim.snippet.expand(args.body)
       end
     },
     window = {
@@ -39,6 +49,8 @@ later(function()
           else
             cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })  -- ONLY choose next candidate without update buffer
           end
+        elseif luasnip.locally_jumpable(1) then
+          luasnip.jump(1)
         elseif vim.snippet.active({ direction = 1 }) then
           vim.schedule(function()
             vim.snippet.jump(1)
@@ -50,6 +62,8 @@ later(function()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })  -- ONLY choose next candidate without update buffer
+        elseif luasnip.locally_jumpable(-1) then
+          luasnip.jump(-1)
         elseif vim.snippet.active({ direction = -1 }) then
           vim.schedule(function()
             vim.snippet.jump(-1)
@@ -60,6 +74,7 @@ later(function()
       end, { "i", "s" }),
     }),
     sources = cmp.config.sources({
+      { name = 'luasnip' },
       { name = 'nvim_lsp' },
     }, {
       { name = 'buffer' },
