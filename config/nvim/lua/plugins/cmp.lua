@@ -37,7 +37,7 @@ later(function()
   cmp.setup({
     completion = {
       documentation = { auto_show = true },
-      ghost_text = { enabled = true },
+      ghost_text = { enabled = false },
       keyword = {
         -- 'prefix' will fuzzy match on the text before the cursor
         -- 'full' will fuzzy match on the text before _and_ after the cursor

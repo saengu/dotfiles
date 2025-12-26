@@ -47,6 +47,11 @@ Use below command to get a list of all available languages and their installatio
 
 File path like `/` or `$HOME`  or `$HOME/` press `<C-x><C-f>` will pop candidates with path provider.
 
+Update `blink.cmp` config at runtime.
+`
+:lua require('blink.cmp.config').completion.documentation.auto_show=false
+`
+
 ## Telescope
 
 When picker is opened, press <C-/> to show which-key style keymap window.

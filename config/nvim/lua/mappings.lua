@@ -125,7 +125,14 @@ keymap('n', '<Space>c', telescope.buffers, {noremap = true, silent = true, desc 
 keymap('n', '<Space>C', telescope.buffers, {noremap = true, silent = true, desc = "Block comment/uncomment selections[TODO]"})
 keymap('n', '<Space>d', vim.diagnostic.open_float, {noremap = true, silent = true, desc = "Show diagnostic message"})
 keymap('n', '<Space>D', telescope.diagnostics, {noremap = true, silent = true, desc = "Open diagnostic picker"})
-keymap('n', '<Space>f', telescope.find_files, {noremap = true, silent = true, desc = "Open file picker"})
+keymap('n', '<Space>f', function()
+  -- Prefer root_dir from nvim-lspconfig/lsp/<language_server>.lua
+  local dirs = vim.lsp.buf.list_workspace_folders()
+  if #dirs == 0 then
+    dirs = { require('telescope.utils').buffer_dir() }
+  end
+  telescope.find_files({ search_dirs = dirs })
+end, {noremap = true, silent = true, desc = "Open file picker"})
 keymap('n', '<Space>F', function()
   local utils = require('telescope.utils')
   telescope.find_files({ search_dirs = { utils.buffer_dir() } })
