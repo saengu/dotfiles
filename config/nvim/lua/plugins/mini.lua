@@ -74,7 +74,6 @@ later(function() require('mini.bracketed').setup() end)
 later(function() require('mini.bufremove').setup() end)
 
 later(function()
-    local mappings = require('mappings')
     require("mini.clue").setup({
         triggers = {
             -- Leader triggers
@@ -120,13 +119,6 @@ later(function()
         },
 
         clues = {
-            mappings.buffer(),
-            mappings.git(),
-            mappings.helix(),
-            mappings.lsp(),
-            mappings.plugin(),
-            mappings.session(),
-
             --{ mode = "n", keys = "<Leader>b", desc = "Manage buffers →" },
             --{ mode = "n", keys = "<Leader>g", desc = "Git operations →" },
             --{ mode = "n", keys = "<Leader>l", desc = "Language server actions →" },

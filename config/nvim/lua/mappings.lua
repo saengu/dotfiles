@@ -4,7 +4,7 @@
 --                    https://github.com/echasnovski/nvim
 --          └─────────────────────────────────────────────────────────┘
 
-local M = {}
+local M = { clues = {} }
 
 -- NOTE: Most basic mappings come from 'mini.basics'
 
@@ -28,63 +28,58 @@ keymap("v", "K", ":m '<-2<CR>gv=gv")
 -- ╔═══════════════════════╗
 -- ║    Plugin  Keymaps    ║
 -- ╚═══════════════════════╝
-function M.plugin()
-  keymap("n", "<Leader>mu", require('mini.deps').update, { desc = 'Update Plugins' })
-  keymap('n', '<Leader>mr', telescope.reloader,    {noremap = true, silent = true, desc = "Reload Lua modules"})
+keymap("n", "<Leader>mu", require('mini.deps').update, { desc = 'Update Plugins' })
+keymap('n', '<Leader>mr', telescope.reloader,    {noremap = true, silent = true, desc = "Reload Lua modules"})
 
-  return { mode = "n", keys = "<Leader>m", desc = "Manage plugins →" }
-end
+vim.list_extend(M.clues, { { mode = "n", keys = "<Leader>m", desc = "Manage plugins →" } })
 
 
 -- ╔═══════════════════════╗
 -- ║    Session Keymaps    ║
 -- ╚═══════════════════════╝
-function M.session()
-  keymap("n", "<leader>ss", function()
-    vim.cmd('wa')
-    require('mini.sessions').write()
-    require('mini.sessions').select()
-  end, { desc = 'Switch Session' })
+keymap("n", "<leader>ss", function()
+  vim.cmd('wa')
+  require('mini.sessions').write()
+  require('mini.sessions').select()
+end, { desc = 'Switch Session' })
 
-  keymap("n", "<leader>sw", function()
-    local cwd = vim.fn.getcwd()
-    local last_folder = cwd:match("([^/]+)$")
-    require('mini.sessions').write(last_folder)
-  end, { desc = 'Save Session' })
+keymap("n", "<leader>sw", function()
+  local cwd = vim.fn.getcwd()
+  local last_folder = cwd:match("([^/]+)$")
+  require('mini.sessions').write(last_folder)
+end, { desc = 'Save Session' })
 
-  keymap("n", "<leader>sf", function()
-    vim.cmd('wa')
-    require('mini.sessions').select()
-  end, { desc = 'Load Session' })
+keymap("n", "<leader>sf", function()
+  vim.cmd('wa')
+  require('mini.sessions').select()
+end, { desc = 'Load Session' })
 
-  return { mode = "n", keys = "<Leader>s", desc = "Manage sessions →" }
-end
+vim.list_extend(M.clues, { { mode = "n", keys = "<Leader>s", desc = "Manage sessions →" } })
 
 -- ╔══════════════════════╗
 -- ║    Buffer Keymaps    ║
 -- ╚══════════════════════╝
-function M.buffer()
-  keymap("n", "<Leader>ba", "<cmd>b#<cr>", { desc = 'Alternate buffer' })
-  keymap("n", "<Leader>bd", "<cmd>bd<cr>", { desc = 'Close buffer' })
-  keymap("n", "<Leader>bd", "<cmd>bd<cr>", { desc = 'Close buffer' })
-  keymap("n", "<Leader>bw", "<cmd>bw<cr>", { desc = 'Wipeout buffer' })
-  keymap("n", "<S-l>", "<cmd>bnext<cr>", { desc = 'Next buffer' })
-  keymap("n", "<S-h>", "<cmd>bprevious<cr>", { desc = 'Previous buffer' })
-  keymap("n", "<TAB>", "<C-^>", { desc = "Alternate buffers" })
-  keymap("n", "<S-Tab>", "<cmd>bw<cr>", { desc = 'Wipeout buffer' })
+keymap("n", "<Leader>ba", "<cmd>b#<cr>", { desc = 'Alternate buffer' })
+keymap("n", "<Leader>bd", "<cmd>bd<cr>", { desc = 'Close buffer' })
+keymap("n", "<Leader>bd", "<cmd>bd<cr>", { desc = 'Close buffer' })
+keymap("n", "<Leader>bw", "<cmd>bw<cr>", { desc = 'Wipeout buffer' })
+keymap("n", "<S-l>", "<cmd>bnext<cr>", { desc = 'Next buffer' })
+keymap("n", "<S-h>", "<cmd>bprevious<cr>", { desc = 'Previous buffer' })
+keymap("n", "<TAB>", "<C-^>", { desc = "Alternate buffers" })
+keymap("n", "<S-Tab>", "<cmd>bw<cr>", { desc = 'Wipeout buffer' })
 
-  -- Format Buffer with and without LSP
-  keymap("n", "<Leader>bf", function()
-    if vim.tbl_isempty(vim.lsp.buf_get_clients()) then
-      --vim.fn.feedkeys(vim.api.nvim_replace_termcodes("gg=G<C-o>", true, true, true), "")
-      vim.fn.feedkeys("gg=G<C-o>", "")
-    else
-      vim.lsp.buf.format()
-    end
-  end, { desc = "Format buffer" })
+-- Format Buffer with and without LSP
+keymap("n", "<Leader>bf", function()
+  if vim.tbl_isempty(vim.lsp.buf_get_clients()) then
+    --vim.fn.feedkeys(vim.api.nvim_replace_termcodes("gg=G<C-o>", true, true, true), "")
+    vim.fn.feedkeys("gg=G<C-o>", "")
+  else
+    vim.lsp.buf.format()
+  end
+end, { desc = "Format buffer" })
 
-  return { mode = "n", keys = "<Leader>b", desc = "Manage buffers →" }
-end
+vim.list_extend(M.clues, { { mode = "n", keys = "<Leader>b", desc = "Manage buffers →" } })
+
 
 -- ╔══════════════════════╗
 -- ║  Telescope Keymaps   ║
@@ -122,75 +117,67 @@ end, { expr = true })
 
 --- Space Mode
 --- Most often used keymap and only one level
-function M.helix()
-  keymap('n', '<Space>/', telescope.live_grep, {noremap = true, silent = true, desc = "Global search in workspace folder"})
-  keymap('n', "<Space>'", telescope.resume,    {noremap = true, silent = true, desc = "Open last fuzzy picker"})
-  keymap('n', '<Space>a', vim.lsp.buf.code_action, {noremap = true, silent = true, desc = "Apply code action"})
-  keymap('n', '<Space>b', telescope.buffers, {noremap = true, silent = true, desc = "Open buffer picker"})
-  keymap('n', '<Space>c', telescope.buffers, {noremap = true, silent = true, desc = "Comment/uncomment selections[TODO]"})
-  keymap('n', '<Space>C', telescope.buffers, {noremap = true, silent = true, desc = "Block comment/uncomment selections[TODO]"})
-  keymap('n', '<Space>d', vim.diagnostic.open_float, {noremap = true, silent = true, desc = "Show diagnostic message"})
-  keymap('n', '<Space>D', telescope.diagnostics, {noremap = true, silent = true, desc = "Open diagnostic picker"})
-  keymap('n', '<Space>f', function()
-    local utils = require('telescope.utils')
-    telescope.find_files({ search_dirs = { utils.buffer_dir() } })
-  end, {noremap = true, silent = true, desc = "Open file picker"})
-  keymap('n', '<Space>F', telescope.find_files, {noremap = true, silent = true, desc = "Open workspace file picker"})
-  --[[
-  keymap('n', '<Space>F', function()
-    telescope.find_files({ find_command = {'rg', '--files', '--hidden', '--iglob', '!.git' }})
-  end, {noremap = true, silent = true, desc = "Open workspace file picker"})
-  --]]
-  keymap('n', '<Space>g', telescope.git_status, {noremap = true, silent = true, desc = "Open changed files picker"})
-  keymap('n', '<Space>h', vim.lsp.buf.document_highlight, {noremap = true, silent = true, desc = "Highlight symbol reference"})
-  keymap('n', '<Space>H', vim.lsp.buf.clear_references, {noremap = true, silent = true, desc = "Clear reference highlight"})
-  keymap('n', '<Space>j', telescope.jumplist,   {noremap = true, silent = true, desc = "Open jumplist picker"})
-  --keymap('n', '<Space>k', vim.lsp.buf.signature_help, {noremap = true, silent = true, desc = "Show signature help"})
-  keymap('n', '<Space>k', vim.lsp.buf.hover,    {noremap = true, silent = true, desc = "Show documentation for item under cursor"})
-  keymap('n', '<Space>l', telescope.loclist,    {noremap = true, silent = true, desc = "Open current window's location list picker"})
-  keymap('n', '<Space>p', telescope.builtin,    {noremap = true, silent = true, desc = "Open current window's location list picker"})
-  keymap('n', '<Space>q', telescope.quickfix,   {noremap = true, silent = true, desc = "Open quickfix picker"})
-  keymap('n', '<Space>Q', telescope.quickfixhistory, {noremap = true, silent = true, desc = "Open quickfix history picker"})
-  keymap('n', '<Space>r', vim.lsp.buf.rename, {noremap = true, silent = true, desc = "Rename symbol"})
-  keymap('n', '<Space>s', telescope.lsp_document_symbols,  {noremap = true, silent = true, desc = "Open symbol picker"})
-  keymap('n', '<Space>S', telescope.lsp_workspace_symbols, {noremap = true, silent = true, desc = "Open symbol picker for workspace"})
-  keymap('n', '<Space>w', "<C-w>", {remap = true, desc = "Window"})
-
-  return {}
-end
+keymap('n', '<Space>/', telescope.live_grep, {noremap = true, silent = true, desc = "Global search in workspace folder"})
+keymap('n', "<Space>'", telescope.resume,    {noremap = true, silent = true, desc = "Open last fuzzy picker"})
+keymap('n', '<Space>a', vim.lsp.buf.code_action, {noremap = true, silent = true, desc = "Apply code action"})
+keymap('n', '<Space>b', telescope.buffers, {noremap = true, silent = true, desc = "Open buffer picker"})
+keymap('n', '<Space>c', telescope.buffers, {noremap = true, silent = true, desc = "Comment/uncomment selections[TODO]"})
+keymap('n', '<Space>C', telescope.buffers, {noremap = true, silent = true, desc = "Block comment/uncomment selections[TODO]"})
+keymap('n', '<Space>d', vim.diagnostic.open_float, {noremap = true, silent = true, desc = "Show diagnostic message"})
+keymap('n', '<Space>D', telescope.diagnostics, {noremap = true, silent = true, desc = "Open diagnostic picker"})
+keymap('n', '<Space>f', function()
+  local utils = require('telescope.utils')
+  telescope.find_files({ search_dirs = { utils.buffer_dir() } })
+end, {noremap = true, silent = true, desc = "Open file picker"})
+keymap('n', '<Space>F', telescope.find_files, {noremap = true, silent = true, desc = "Open workspace file picker"})
+--[[
+keymap('n', '<Space>F', function()
+  telescope.find_files({ find_command = {'rg', '--files', '--hidden', '--iglob', '!.git' }})
+end, {noremap = true, silent = true, desc = "Open workspace file picker"})
+--]]
+keymap('n', '<Space>g', telescope.git_status, {noremap = true, silent = true, desc = "Open changed files picker"})
+keymap('n', '<Space>h', vim.lsp.buf.document_highlight, {noremap = true, silent = true, desc = "Highlight symbol reference"})
+keymap('n', '<Space>H', vim.lsp.buf.clear_references, {noremap = true, silent = true, desc = "Clear reference highlight"})
+keymap('n', '<Space>j', telescope.jumplist,   {noremap = true, silent = true, desc = "Open jumplist picker"})
+--keymap('n', '<Space>k', vim.lsp.buf.signature_help, {noremap = true, silent = true, desc = "Show signature help"})
+keymap('n', '<Space>k', vim.lsp.buf.hover,    {noremap = true, silent = true, desc = "Show documentation for item under cursor"})
+keymap('n', '<Space>l', telescope.loclist,    {noremap = true, silent = true, desc = "Open current window's location list picker"})
+keymap('n', '<Space>p', telescope.builtin,    {noremap = true, silent = true, desc = "Open current window's location list picker"})
+keymap('n', '<Space>q', telescope.quickfix,   {noremap = true, silent = true, desc = "Open quickfix picker"})
+keymap('n', '<Space>Q', telescope.quickfixhistory, {noremap = true, silent = true, desc = "Open quickfix history picker"})
+keymap('n', '<Space>r', vim.lsp.buf.rename, {noremap = true, silent = true, desc = "Rename symbol"})
+keymap('n', '<Space>s', telescope.lsp_document_symbols,  {noremap = true, silent = true, desc = "Open symbol picker"})
+keymap('n', '<Space>S', telescope.lsp_workspace_symbols, {noremap = true, silent = true, desc = "Open symbol picker for workspace"})
+keymap('n', '<Space>w', "<C-w>", {remap = true, desc = "Window"})
 
 
 -- ╔══════════════════════╗
 -- ║  Git Keymaps         ║
 -- ╚══════════════════════╝
-function M.git()
-  keymap('n', '<Leader>gc', telescope.git_commits,    {noremap = true, silent = true, desc = "Open commits picker"})
-  keymap('n', '<Leader>gb', telescope.git_bcommits,   {noremap = true, silent = true, desc = "Show buffer commits and checkout"})
-  keymap({'n','v'}, '<Leader>gB', telescope.git_branches,   {noremap = true, silent = true, desc = "Open branches picker"})
-  keymap('n', '<Leader>gs', telescope.git_status,   {noremap = true, silent = true, desc = "Show current changes by file"})
-  keymap('n', '<Leader>gS', telescope.git_stash,   {noremap = true, silent = true, desc = "Stash items in current repository"})
+keymap('n', '<Leader>gc', telescope.git_commits,    {noremap = true, silent = true, desc = "Open commits picker"})
+keymap('n', '<Leader>gb', telescope.git_bcommits,   {noremap = true, silent = true, desc = "Show buffer commits and checkout"})
+keymap({'n','v'}, '<Leader>gB', telescope.git_branches,   {noremap = true, silent = true, desc = "Open branches picker"})
+keymap('n', '<Leader>gs', telescope.git_status,   {noremap = true, silent = true, desc = "Show current changes by file"})
+keymap('n', '<Leader>gS', telescope.git_stash,   {noremap = true, silent = true, desc = "Stash items in current repository"})
 
-  return { mode = "n", keys = "<Leader>g", desc = "Git operations →" }
-end
+vim.list_extend(M.clues, { { mode = "n", keys = "<Leader>g", desc = "Git operations →" } })
 
 -- ╔═══════════════════════════╗
 -- ║  Language Server Keymaps  ║
 -- ╚═══════════════════════════╝
-function M.lsp()
-  keymap('n', '<Leader>lc', telescope.lsp_incoming_calls, { desc = "Open incoming calls picker" })
-  keymap('n', '<Leader>lC', telescope.lsp_incoming_calls, { desc = "Open outgoing calls picker" })
-  keymap('n', '<Leader>ld', telescope.diagnostics, {noremap = true, silent = true, desc = "Open diagnostic picker"})
-  keymap('n', '<Leader>lr', telescope.lsp_references, { desc = "Open references picker" })
-  keymap('n', '<Leader>ls', telescope.lsp_document_symbols,  {noremap = true, silent = true, desc = "Open symbol picker"})
-  keymap('n', '<Leader>lS', telescope.lsp_workspace_symbols, {noremap = true, silent = true, desc = "Open symbol picker for workspace"})
-  keymap('n', '<Leader>lD', telescope.lsp_definitions, { desc = "Go to definition" })
-  keymap('n', '<Leader>li', telescope.lsp_implementations, { desc = "Go to implementation"})
-  keymap('n', '<Leader>lt', telescope.lsp_type_definitions, { desc = "Go to type definition"})
-  keymap({'i', 'n'}, '<C-k>', vim.lsp.buf.hover,    {noremap = true, silent = true, desc = "Show documentation for item under cursor"})
-  --keymap({'i', 'n'}, '<C-k>', vim.lsp.buf.signature_help, {noremap = true, silent = true, desc = "Show signature help"})
+keymap('n', '<Leader>lc', telescope.lsp_incoming_calls, { desc = "Open incoming calls picker" })
+keymap('n', '<Leader>lC', telescope.lsp_incoming_calls, { desc = "Open outgoing calls picker" })
+keymap('n', '<Leader>ld', telescope.diagnostics, {noremap = true, silent = true, desc = "Open diagnostic picker"})
+keymap('n', '<Leader>lr', telescope.lsp_references, { desc = "Open references picker" })
+keymap('n', '<Leader>ls', telescope.lsp_document_symbols,  {noremap = true, silent = true, desc = "Open symbol picker"})
+keymap('n', '<Leader>lS', telescope.lsp_workspace_symbols, {noremap = true, silent = true, desc = "Open symbol picker for workspace"})
+keymap('n', '<Leader>lD', telescope.lsp_definitions, { desc = "Go to definition" })
+keymap('n', '<Leader>li', telescope.lsp_implementations, { desc = "Go to implementation"})
+keymap('n', '<Leader>lt', telescope.lsp_type_definitions, { desc = "Go to type definition"})
+keymap({'i', 'n'}, '<C-k>', vim.lsp.buf.hover,    {noremap = true, silent = true, desc = "Show documentation for item under cursor"})
+--keymap({'i', 'n'}, '<C-k>', vim.lsp.buf.signature_help, {noremap = true, silent = true, desc = "Show signature help"})
 
-  return { mode = "n", keys = "<Leader>l", desc = "Language server actions →" }
-end
+vim.list_extend(M.clues, { { mode = "n", keys = "<Leader>l", desc = "Language server actions →" } })
 
 --[[
 keymap('n', '<M-k>', vim.lsp.buf.signature_help, { desc = "Signature Help" })
@@ -230,5 +217,9 @@ function M.inlay_hint()
   --vim.lsp.inlay_hint.enable(true)
 end
 
+-- Update clues
+local clue = require('mini.clue')
+vim.list_extend(clue.config.clues, M.clues)
+clue.setup(clue.config)
 
 return M
