@@ -13,6 +13,7 @@ end
 
 later(function()
 
+  -- Install blink.cmp
   if jit.os == 'OSX' and jit.arch == 'arm64' then
     -- Build from source
     add({
@@ -37,15 +38,28 @@ later(function()
     completion = {
       documentation = { auto_show = true },
       ghost_text = { enabled = true },
+      keyword = {
+        -- 'prefix' will fuzzy match on the text before the cursor
+        -- 'full' will fuzzy match on the text before _and_ after the cursor
+        -- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
+        range = 'full'
+      },
       list = { selection = { preselect = true, auto_insert = false } },
       menu = {
         auto_show = true,
       },
     },
     keymap = {
+      ['<C-x><C-f>'] = { function(cmp)
+        cmp.show({ providers = { 'path' } })
+      end, 'fallback' },
+
       ['<CR>'] = { 'select_and_accept', 'fallback' },
     },
     signature = { enabled = true },
+    sources = {
+      default = { "lsp", "snippets", "buffer" },
+    },
   })
 
 end)
