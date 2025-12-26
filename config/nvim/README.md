@@ -41,7 +41,15 @@ Use below command to get a list of all available languages and their installatio
 :TSInstall <language_to_install>
 ```
 
+# Keymaps
 
+## Completions
+
+File path like `/` or `$HOME`  or `$HOME/` press `<C-x><C-f>` will pop candidates with path provider.
+
+## Telescope
+
+When picker is opened, press <C-/> to show which-key style keymap window.
 
 # Cookbook
 
