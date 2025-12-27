@@ -49,6 +49,17 @@ now(function()
         if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
           require('mappings').inlay_hint()
         end
+
+        if client:supports_method('textDocument/formatting') then
+          vim.api.nvim_create_augroup("LspFormat", { clear = true })
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = args.buf,
+            group = "LspFormat",
+            callback = function()
+              vim.lsp.buf.format({ async = false, id = args.data.client_id })
+            end,
+          })
+        end
       end,
   })
 end)

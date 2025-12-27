@@ -69,8 +69,9 @@ keymap("n", "<TAB>", "<C-^>", { desc = "Alternate buffers" })
 keymap("n", "<S-Tab>", "<cmd>bw<cr>", { desc = 'Wipeout buffer' })
 
 -- Format Buffer with and without LSP
-keymap("n", "<Leader>bf", function()
-  if vim.tbl_isempty(vim.lsp.buf_get_clients()) then
+--keymap("n", "<Leader>bf", function()
+keymap("n", "=", function()
+  if vim.tbl_isempty(vim.lsp.get_clients()) then
     --vim.fn.feedkeys(vim.api.nvim_replace_termcodes("gg=G<C-o>", true, true, true), "")
     vim.fn.feedkeys("gg=G<C-o>", "")
   else
@@ -132,11 +133,11 @@ keymap('n', '<Space>f', function()
     dirs = { require('telescope.utils').buffer_dir() }
   end
   telescope.find_files({ search_dirs = dirs })
-end, {noremap = true, silent = true, desc = "Open file picker"})
+end, {noremap = true, silent = true, desc = "Open file picker at workspace"})
 keymap('n', '<Space>F', function()
   local utils = require('telescope.utils')
   telescope.find_files({ search_dirs = { utils.buffer_dir() } })
-end, {noremap = true, silent = true, desc = "Open file picker for current folder"})
+end, {noremap = true, silent = true, desc = "Open file picker at current buffer directory"})
 --[[
 keymap('n', '<Space>F', function()
   telescope.find_files({ find_command = {'rg', '--files', '--hidden', '--iglob', '!.git' }})
