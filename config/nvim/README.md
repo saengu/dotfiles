@@ -52,6 +52,10 @@ Update `blink.cmp` config at runtime.
 :lua require('blink.cmp.config').completion.documentation.auto_show=false
 `
 
+## LSP
+
+format code: press `=`
+
 ## Telescope
 
 When picker is opened, press <C-/> to show which-key style keymap window.

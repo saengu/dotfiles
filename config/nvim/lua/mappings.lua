@@ -14,11 +14,17 @@ local telescope = require('telescope.builtin')
 -- ╔═══════════════════════╗
 -- ║    General Keymaps    ║
 -- ╚═══════════════════════╝
+keymap('n', '<Leader>p', telescope.builtin, {noremap = true, silent = true, desc = "Show Telescope builtin pickers"})
 keymap("n", "<Leader>q", "<cmd>wqa<cr>", { desc = 'Quit' })
 keymap("n", "<Leader>Q", "<cmd>qa!<cr>", { desc = 'Force Quit' })
-keymap('n', '<Leader>T', telescope.builtin, {noremap = true, silent = true, desc = "Show Telescope builtin pickers"})
-keymap('n', '<Leader>t', telescope.treesitter, {noremap = true, silent = true, desc = "Open tree-sitter picker"})
+keymap('n', '<Leader>T', telescope.treesitter, {noremap = true, silent = true, desc = "Open tree-sitter picker"})
 keymap("i", "<C-S-v>",   "<C-r><C-o>*",  { desc = 'Paste from system in insert mode' })
+
+keymap('n', '<Leader>d', vim.lsp.buf.definition, {noremap = true, silent = true, desc = "Go to definition"})
+keymap('n', '<Leader>D', vim.lsp.buf.declaration, {noremap = true, silent = true, desc = "Go to declaration"})
+keymap('n', '<Leader>i', telescope.lsp_implementations, {noremap = true, silent = true, desc = "Go to implementation"})
+keymap('n', '<Leader>r', telescope.lsp_references, {noremap = true, silent = true, desc = "Go to references"})
+keymap('n', '<Leader>t', vim.lsp.buf.type_definition, {noremap = true, silent = true, desc = "Go to type definition"})
 
 -- Moving block
 -- Borrowed from https://medium.com/unixification/must-have-neovim-keymaps-51c283394070
@@ -118,7 +124,9 @@ end, { expr = true })
 
 --- Space Mode
 --- Most often used keymap and only one level
-keymap('n', '<Space>/', telescope.live_grep, {noremap = true, silent = true, desc = "Global search in workspace folder"})
+keymap('n', '<Space>/', telescope.live_grep, {noremap = true, silent = true, desc = "Search workspace folder for pattern"})
+keymap('n', '<Space>*', telescope.grep_string, {noremap = true, silent = true, desc = "Use selection as search pattern"})
+keymap('n', '<Space>?', telescope.commands, {noremap = true, silent = true, desc = "Open picker for available commands"})
 keymap('n', "<Space>'", telescope.resume,    {noremap = true, silent = true, desc = "Open last fuzzy picker"})
 keymap('n', '<Space>a', vim.lsp.buf.code_action, {noremap = true, silent = true, desc = "Apply code action"})
 keymap('n', '<Space>b', telescope.buffers, {noremap = true, silent = true, desc = "Open buffer picker"})
