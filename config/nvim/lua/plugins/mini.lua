@@ -21,6 +21,7 @@ now(function()
   require('mini.basics').setup({
     -- Manage options manually in a spirit of transparency
     options = { basic = false },
+    -- Disable basic keymap due to <C-s> conflicts with builtin lsp show signature_help keymap.
     mappings = { basic = false, windows = true, move_with_alt = true },
     autocommands = { relnum_in_visual_mode = true },
   })

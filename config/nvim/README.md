@@ -75,11 +75,11 @@ vim.keymap.del("i", "<C-c>")
 vim.keymap.del("n", "<Leader>L", { buffer = true })
 ```
 
-show signature help <C-s>, normal insert mode, rust put cursor on argument, golang put on bracket.
+show signature help <C-s>, normal insert mode, rust put cursor on argument in bracket or right bracket if function requires no argument, golang put on bracket.
 show document `K` normal mode, <C-k> both insert and normal mode. `C-<Space>` for completion menu item.
 
-copy from system clipboard `<Space>p`
-copy to system clipboard `<Space>y`
+paste from system clipboard normal mode `<Space>p`, insert mode use system keymap `<C-v>`.
+copy to system clipboard normal mode `<Space>y`
 
 ## Telescope
 
