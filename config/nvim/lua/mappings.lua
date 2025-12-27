@@ -28,7 +28,17 @@ keymap('n', '<Leader>i', telescope.lsp_implementations, {noremap = true, silent 
 keymap('n', '<Leader>r', telescope.lsp_references, {noremap = true, silent = true, desc = "Go to references"})
 keymap('n', '<Leader>t', vim.lsp.buf.type_definition, {noremap = true, silent = true, desc = "Go to type definition"})
 
-keymap('n', '<Leader>h', vim.lsp.buf.type_definition, {noremap = true, silent = true, desc = "Go to type definition"})
+
+-- Clipboard
+-- Copy from mini.basics which disabled due to <C-s> conflicts with builtin lsp show signature_help keymap.
+-- Add back keymaps from manually
+-- https://github.com/nvim-mini/mini.nvim/blob/7e55c3d2c04da134085a31156196836f80a89982/lua/mini/basics.lua#L584C1-L584C94
+
+-- Copy/paste with system clipboard
+keymap({ 'n', 'x' }, '<Space>y', '"+y', { desc = 'Copy to system clipboard' })
+keymap(  'n',        '<Space>p', '"+p', { desc = 'Paste from system clipboard' })
+-- - Paste in Visual with `P` to not copy selected text (`:h v_P`)
+keymap(  'x',        '<Space>p', '"+P', { desc = 'Paste from system clipboard' })
 
 -- Moving block
 -- Borrowed from https://medium.com/unixification/must-have-neovim-keymaps-51c283394070
@@ -156,7 +166,6 @@ keymap('n', '<Space>j', telescope.jumplist,   {noremap = true, silent = true, de
 --keymap('n', '<Space>k', vim.lsp.buf.signature_help, {noremap = true, silent = true, desc = "Show signature help"})
 --keymap('n', '<Space>k', vim.lsp.buf.hover,    {noremap = true, silent = true, desc = "Show documentation for item under cursor"})
 keymap('n', '<Space>l', telescope.loclist,    {noremap = true, silent = true, desc = "Open current window's location list picker"})
-keymap('n', '<Space>p', telescope.builtin,    {noremap = true, silent = true, desc = "Open current window's location list picker"})
 keymap('n', '<Space>q', telescope.quickfix,   {noremap = true, silent = true, desc = "Open quickfix picker"})
 keymap('n', '<Space>Q', telescope.quickfixhistory, {noremap = true, silent = true, desc = "Open quickfix history picker"})
 keymap('n', '<Space>r', vim.lsp.buf.rename, {noremap = true, silent = true, desc = "Rename symbol"})
@@ -188,8 +197,8 @@ keymap('n', '<Leader>lS', telescope.lsp_workspace_symbols, {noremap = true, sile
 keymap('n', '<Leader>lD', telescope.lsp_definitions, { desc = "Go to definition" })
 keymap('n', '<Leader>li', telescope.lsp_implementations, { desc = "Go to implementation"})
 keymap('n', '<Leader>lt', telescope.lsp_type_definitions, { desc = "Go to type definition"})
---keymap({'i', 'n'}, '<C-k>', vim.lsp.buf.hover,    {noremap = true, silent = true, desc = "Show documentation for item under cursor"})
---keymap({'i', 'n'}, '<C-s>', vim.lsp.buf.signature_help, {noremap = true, silent = true, desc = "Show signature help"})
+keymap({'i', 'n'}, '<C-k>', vim.lsp.buf.hover,    {noremap = true, silent = true, desc = "Show documentation for item under cursor"})
+keymap({'i', 'n'}, '<C-s>', vim.lsp.buf.signature_help, {noremap = true, silent = true, desc = "Show signature help"})
 
 vim.list_extend(clues, { { mode = "n", keys = "<Leader>l", desc = "Language server actions →" } })
 

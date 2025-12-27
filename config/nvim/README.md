@@ -59,6 +59,27 @@ show function document normal mode press `K`
 
 
 Show all key maps by command `:map`
+Inspect key binding of single keymap `:imap <C-k>`
+
+
+delete keymap
+```
+-- Delete a normal mode keymap for <Leader>D
+vim.keymap.del("n", "<Leader>D")
+
+-- Delete an insert mode keymap for <C-c>
+vim.keymap.del("i", "<C-c>")
+
+-- Delete a buffer-local keymap (requires the 'buffer' option to be set when deleting)
+-- Example if the original was set with { buffer = true }
+vim.keymap.del("n", "<Leader>L", { buffer = true })
+```
+
+show signature help <C-s>, normal insert mode, rust put cursor on argument, golang put on bracket.
+show document `K` normal mode, <C-k> both insert and normal mode. `C-<Space>` for completion menu item.
+
+copy from system clipboard `<Space>p`
+copy to system clipboard `<Space>y`
 
 ## Telescope
 

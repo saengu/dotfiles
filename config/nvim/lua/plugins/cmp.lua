@@ -36,7 +36,7 @@ later(function()
   local cmp = require('blink.cmp')
   cmp.setup({
     completion = {
-      documentation = { auto_show = true },
+      --documentation = { auto_show = true }, -- press <C-Space> to show or hide signature
       ghost_text = { enabled = false },
       keyword = {
         -- 'prefix' will fuzzy match on the text before the cursor
