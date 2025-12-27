@@ -54,7 +54,11 @@ Update `blink.cmp` config at runtime.
 
 ## LSP
 
-format code: press `=`
+format code: normal mode press `=`
+show function document normal mode press `K`
+
+
+Show all key maps by command `:map`
 
 ## Telescope
 
