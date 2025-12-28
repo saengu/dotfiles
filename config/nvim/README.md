@@ -81,6 +81,8 @@ show document `K` normal mode, <C-k> both insert and normal mode. `C-<Space>` fo
 paste from system clipboard normal mode `<Space>p`, insert mode use system keymap `<C-v>`.
 copy to system clipboard normal mode `<Space>y`
 
+the substitude command `s` not work as it conflicts with `mini.surround` and disabled in `mini.surround` config.
+
 ## Telescope
 
 When picker is opened, press <C-/> to show which-key style keymap window.
