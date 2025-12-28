@@ -122,6 +122,31 @@ And there we have it, modern format on save for those who want it.
 
 Reference: https://www.mitchellhanberg.com/modern-format-on-save-in-neovim/
 
+
+## help
+`:help` is a command that navigates a set of help files. For instance, if we wanted to learn how to
+search for a string in Vim, we could try using the following `:h search`. However, it looks like this command takes us to the entry on expression evaluation, which is not
+exactly what we were looking for. To find the right entry, type :h search (don’t hit Enter yet) followed by Ctrl + d. This will give you a
+list of help tags containing the search substring. One of the options shown is `search-commands`, which is what we’d be looking for.
+
+Navigating search files
+A discerning reader might notice certain keywords adorned with various characters ([, {, |,
+etc.) or highlighted (depending on your color scheme) in help pages. When your cursor is over
+a keyword in a help file, you can press Ctrl + ] to jump to the definition of the keyword, and
+Ctrl + o to jump back. Give it a shot!
+
+## Adjust window size
+ respective width commands: 20<c-w>| ("pipe" symbol - statically set width to 20 - without a number it will maximize it) and 20<c-w>< (decrease width of current window by 20) and 20<c-w>>
+
+
+
+The Ctrl-W+ shortcut takes a preceding count. The Ctrl-W_ command maximizes the window without a count, or sets absolute height with a preceding count. Using counts, you should rarely have to do repeated window resizing commands.
+
+If you do find yourself frequently wanting to make small repeated adjustments to window sizes, maybe you could take advantage of the repeatability of ex-commands (with @:) and resize with :resize +1 instead of the keyboard shortcut.
+
+After pressing @: once, you can then press @@ multiple times (it means something like: execute the command in the last used buffer) // ADDITIONALLY respective shortcuts for width are: <c-w>| (maximizes or sets absolute width) and <c-w>< or <c-w>> (to de-/increase width) and <c-w>= to equalize.
+@: repeats the last command line cmd, @@ repeats the previous cmdline/macro/keybind.
+
 ## Reference:
 
 1. https://github.com/nvim-treesitter/nvim-treesitter

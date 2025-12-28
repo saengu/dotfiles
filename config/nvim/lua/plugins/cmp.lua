@@ -35,6 +35,7 @@ later(function()
 
   local cmp = require('blink.cmp')
   cmp.setup({
+    cmdline = { enabled = false },
     completion = {
       --documentation = { auto_show = true }, -- press <C-Space> to show or hide signature
       ghost_text = { enabled = false },
