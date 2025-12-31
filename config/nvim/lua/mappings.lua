@@ -52,7 +52,7 @@ keymap("n", "<leader>ss", function()
 end, { desc = 'Switch Session' })
 
 keymap("n", "<leader>sw", function()
-  local cwd = vim.fn.getcwd()
+  local cwd = vim.fn.getcwd(0)
   local last_folder = cwd:match("([^/]+)$")
   require('mini.sessions').write(last_folder)
 end, { desc = 'Save Session' })
@@ -73,8 +73,8 @@ keymap("n", "<Leader>bd", "<cmd>bd<cr>", { desc = 'Close buffer' })
 keymap("n", "<Leader>bw", "<cmd>bw<cr>", { desc = 'Wipeout buffer' })
 keymap("n", "<S-l>", "<cmd>bnext<cr>", { desc = 'Next buffer' })
 keymap("n", "<S-h>", "<cmd>bprevious<cr>", { desc = 'Previous buffer' })
-keymap("n", "<TAB>", "<C-^>", { desc = "Alternate buffers" })
-keymap("n", "<S-Tab>", "<cmd>bw<cr>", { desc = 'Wipeout buffer' })
+--keymap("n", "<TAB>", "<C-^>", { desc = "Alternate buffers" })
+--keymap("n", "<S-Tab>", "<cmd>bw<cr>", { desc = 'Wipeout buffer' })
 
 vim.list_extend(clues, { { mode = "n", keys = "<Leader>b", desc = "Manage buffers →" } })
 -- Format Buffer with and without LSP
@@ -138,7 +138,7 @@ keymap('n', '<Space>f', function()
   -- Prefer root_dir from nvim-lspconfig/lsp/<language_server>.lua
   local dirs = vim.lsp.buf.list_workspace_folders()
   if #dirs == 0 then
-    dirs = { require('telescope.utils').buffer_dir() }
+    dirs = { vim.fn.getcwd() }
   end
   telescope.find_files({ search_dirs = dirs })
 end, {noremap = true, silent = true, desc = "Open file picker at workspace"})
