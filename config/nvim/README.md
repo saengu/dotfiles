@@ -87,6 +87,20 @@ the substitude command `s` not work as it conflicts with `mini.surround` and dis
 
 When picker is opened, press <C-/> to show which-key style keymap window.
 
+# Movement
+
+## Native VIM
+$  → go to the end of line
+g_ → go to the last non-blank character of line
+
+
+0 and | are only superficially equivalent: 0 explicitly gets you to the first column of the current line while | does it implicitly, because you don't give it a count. Prefer explicit over implicit.
+
+^ and _ are only superficially equivalent: ^ explicitly gets you to the first printable character of the current line while _ does it implicitly, because you don't give it a count. Prefer explicit over implicit.
+
+_ takes a count, and ^ doesn't, as you said. Furthermore, ^ is charwise exclusive, and _ is linewise. So d^ deletes until the last starting blank on the line, excluding the char it is on. d<count>_ deletes the current and count-1 additional whole lines.
+
+
 # Cookbook
 
 ## Support Formatting on Save
