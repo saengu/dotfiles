@@ -51,6 +51,20 @@ later(function()
       },
     },
     keymap = {
+      ['<Tab>'] = { function(cmp)
+        if cmp.snippet_active() then
+          return cmp.snippet_forward()
+        else
+          return cmp.select_next()
+        end
+      end, 'fallback'},
+      ['<S-Tab>'] = { function(cmp)
+        if cmp.snippet_active() then
+          return cmp.snippet_backward()
+        else
+          return cmp.select_prev()
+        end
+      end, 'fallback'},
       ['<C-x><C-f>'] = { function(cmp)
         cmp.show({ providers = { 'path' } })
       end, 'fallback' },
