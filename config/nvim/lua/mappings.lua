@@ -3,8 +3,8 @@
 --                    https://gitlab.com/domsch1988/mvim
 --                    https://github.com/echasnovski/nvim
 --          └─────────────────────────────────────────────────────────┘
+local add, now, now_if_args, later = vim.pack.add, Core.now, Core.now_if_args, Core.later
 
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local M = {}
 local clues = {}
 

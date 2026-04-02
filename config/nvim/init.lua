@@ -10,6 +10,8 @@
 --                  https://github.com/echasnovski/nvim/init.lua
 --          └─────────────────────────────────────────────────────────┘
 
+-- Manually with git clone
+--[[
 local mini_path = vim.fn.stdpath('data') .. '/site/pack/deps/start/mini.nvim'
 if not vim.loop.fs_stat(mini_path) then
   vim.cmd('echo "Installing `mini.nvim`" | redraw')
@@ -18,12 +20,40 @@ if not vim.loop.fs_stat(mini_path) then
   vim.cmd('packadd mini.nvim | helptags ALL')
   vim.cmd('echo "Installed `mini.nvim`" | redraw')
 end
+--]]
 
--- Set up 'mini.deps' immediately to have its `now()` and `later()` helpers
-require('mini.deps').setup()
+-- Borrow from https://github.com/nvim-mini/MiniMax
+-- Use vim pack (neovim >= 0.12)
+vim.pack.add({ 'https://github.com/nvim-mini/mini.nvim' })
+
+local misc = require('mini.misc')
 
 -- Define main config table to be able to use it in scripts
---_G.Config = {}
+_G.Core = {}
+
+Core.now = function(fn) misc.safely('now', fn) end
+Core.later = function(fn) misc.safely('later', fn) end
+Core.now_if_args = vim.fn.argc(-1) > 0 and Core.now or Core.later
+Core.on_event = function(evt, fn) misc.safely('event:' .. evt, fn) end
+Core.on_filetype = function(ft, fn) misc.safely('filetype:' .. ft, fn) end
+
+local group = vim.api.nvim_create_augroup('custom-config', {})
+Core.new_autocmd = function(event, pattern, callback, desc)
+  local opts = { group = group, pattern = pattern, callback = callback, desc = desc }
+  vim.api.nvim_create_autocmd(event, opts)
+end
+
+-- Define custom `vim.pack.add()` hook helper. See `:h vim.pack-events`.
+-- Example usage: see 'plugin/40_plugins.lua'.
+Core.on_packchanged = function(plugin_name, kinds, callback, desc)
+  local fn = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if not (name == plugin_name and vim.tbl_contains(kinds, kind)) then return end
+    if not ev.data.active then vim.cmd.packadd(plugin_name) end
+    callback()
+  end
+  Core.new_autocmd('PackChanged', '*', fn, desc)
+end
 
 
 --          ┌─────────────────────────────────────────────────────────┐

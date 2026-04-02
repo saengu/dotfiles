@@ -1,4 +1,4 @@
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+local add, now, now_if_args, later = vim.pack.add, Core.now, Core.now_if_args, Core.later
 
 
 local function build_blink(params)
@@ -12,26 +12,25 @@ local function build_blink(params)
 end
 
 later(function()
-
+    -- After plugin installed.
+    -- Go to `~/.local/share/nvim/site/pack/core/opt/blink.cmp`
+    -- Run `cargo build --release`
+    add({
+      "https://github.com/rafamadriz/friendly-snippets",
+      "https://github.com/saghen/blink.cmp"
+    })
+  --[[
   -- Install blink.cmp
   if jit.os == 'OSX' and jit.arch == 'arm64' then
     -- Build from source
-    add({
-      source = 'saghen/blink.cmp',
-      depends = { "rafamadriz/friendly-snippets" },
-      hooks = {
-        post_install = build_blink,
-        post_checkout = build_blink,
-      },
-    })
+    add("https://github.com/rafamadriz/friendly-snippets"")
+    add("https://github.com/saghen/blink.cmp")
   else
     -- Download pre-built binaries
-    add({
-      source = "saghen/blink.cmp",
-      depends = { "rafamadriz/friendly-snippets" },
-    })
+    add("https://github.com/rafamadriz/friendly-snippets"")
+    add("https://github.com/saghen/blink.cmp")
   end
-
+  --]]
 
   local cmp = require('blink.cmp')
   cmp.setup({

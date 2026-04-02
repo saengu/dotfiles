@@ -5,16 +5,13 @@
 --          ╚═════════════════════════════════════════════════════════╝
 --
 --  ─( Import Helper Functions )─────────────────────────────────────────────
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+local now, now_if_args, later = Core.now, Core.now_if_args, Core.later
 
 
 --          ┌─────────────────────────────────────────────────────────┐
 --            We took this from echasnovski's personal configuration
 --           https://github.com/echasnovski/nvim/blob/master/init.lua
 --          └─────────────────────────────────────────────────────────┘
-
--- Make 'mini.nvim' part of the 'mini-deps-snap'
-add({ name = 'mini.nvim' })
 
 --  ─( Step One )──────────────────────────────────────────────────────
 now(function()

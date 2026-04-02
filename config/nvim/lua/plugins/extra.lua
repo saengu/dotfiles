@@ -1,13 +1,4 @@
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
-
--- ╔═══════════════════════╗
--- ║ Lsp                   ║
--- ╚═══════════════════════╝
--- Install LSP/formatting/linter executables ==================================
---later(function()
---  add('williamboman/mason.nvim')
---  require('mason').setup()
---end)
+local add, now, now_if_args, later = vim.pack.add, Core.now, Core.now_if_args, Core.later
 
 
 --          ┌─────────────────────────────────────────────────────────┐
@@ -22,7 +13,7 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 --          └─────────────────────────────────────────────────────────┘
 
 now(function()
-  add('neovim/nvim-lspconfig')
+  add({'https://github.com/neovim/nvim-lspconfig'})
 
   vim.lsp.enable({ 'clangd', 'gopls', 'zls' })
 
@@ -125,9 +116,8 @@ end)
 -- Use later will not hijack netrw
 now(function()
   add({
-    source = "nvim-telescope/telescope.nvim",
-    checkout = 'v0.2.0',
-    depends = { "nvim-lua/plenary.nvim" },
+    "https://github.com/nvim-lua/plenary.nvim",
+    "https://github.com/nvim-telescope/telescope.nvim"
   })
 
   require("telescope").setup({
@@ -190,7 +180,7 @@ now(function()
 --  add('EdenEast/nightfox.nvim')
 --  add('scottmckendry/cyberdream.nvim')
 --  add('Shatur/neovim-ayu')
-    add('scottmckendry/cyberdream.nvim')
+    add({"https://github.com/scottmckendry/cyberdream.nvim"})
 
     vim.api.nvim_set_hl(0, "LspReferenceText",  { bg = "#000080", fg = "#FFFFFF" }) -- Dark blue background, white text
     vim.api.nvim_set_hl(0, "LspReferenceRead",  { bg = "#008000", fg = "#FFFFFF" }) -- Dark green background, white text
@@ -210,13 +200,15 @@ end)
 
 -- Tree-sitter (advanced syntax parsing, highlighting, textobjects) ===========
 later(function()
+  -- DO NOT need to call setup for nvim-treesitter to work using default values
   add({
-    source = 'nvim-treesitter/nvim-treesitter',
-    checkout = 'master',
-    hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
+    "https://github.com/nvim-treesitter/nvim-treesitter",
+    "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
   })
-  add('nvim-treesitter/nvim-treesitter-textobjects')
 
+
+  -- Old config for neovim < 0.12
+  --[[
   --stylua: ignore
   local ensure_installed = {
     'bash',       'c',    'cpp',  'css',      'go',              'html',
@@ -224,7 +216,7 @@ later(function()
     'regex',      'rust', 'toml', 'tsx',      'yaml',
   }
 
-  require('nvim-treesitter.configs').setup({
+  require('nvim-treesitter').setup({
     --ensure_installed = ensure_installed,
     highlight = { enable = true },
     textobjects = { enable = false },
@@ -243,7 +235,7 @@ later(function()
       },
     },
   })
-
+  --]]
   --[[
   vim.keymap.set("n", "]n", function()
     local t = require("nvim-treesitter.ts_utils")
