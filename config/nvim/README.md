@@ -83,6 +83,15 @@ copy to system clipboard normal mode `<Space>y`
 
 the substitude command `s` not work as it conflicts with `mini.surround` and disabled in `mini.surround` config.
 
+switch betweeb tabs `gt` `gT`
+
+commandline
+  `<C-f>` show history
+wilemode (commandline completion)
+  `<C-e>` (end) Stop completion and revert to the original text you typed.
+  `<C-d>` show all candidates
+
+
 ## Telescope
 
 When picker is opened, press <C-/> to show which-key style keymap window.

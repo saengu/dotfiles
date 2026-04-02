@@ -69,7 +69,12 @@ later(function()
 end)
 
 later(function()
-  add('mrcjkb/rustaceanvim')
+  -- Use rust analyzer directly
+  vim.lsp.enable({ 'rust_analyzer' })
+
+  -- Or use plugin
+  --add('mrcjkb/rustaceanvim')
+
 
   --[[
   vim.g.rustaceanvim = {
